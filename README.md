@@ -10,7 +10,6 @@
 <p>Payment is a critical part of any marketplace or Saas. In this hypothetical scenario, a user 
 needs to pay 20USD a month to access premium content. After a month they will have to renew 
 their subscription</p>
-<p>The aim of the project is to Design and Implement an API that has the following:</p>
 
 ## <h1> Features</h1>
 <ul>
