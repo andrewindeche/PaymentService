@@ -1,41 +1,86 @@
 using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Threading.Tasks;
 
-public interface IPaymentEvent
+namespace YourApp.Controllers
 {
-    string Status { get; set; }
-    int CustomerId { get; set; }
-}
-
-public class PaymentEvent : IPaymentEvent
-{
-    public required string Status { get; set; }
-    public int CustomerId { get; set; }
-}
-
-[ApiController]
-[Route("api/[controller]")]
-public class WebhookController : ControllerBase
-{
-    private readonly IUserRepository users;
-
-    public WebhookController(IUserRepository users)
+    public interface IUserRepository
     {
-        this.users = users;
+        Task<PaymentUser> GetByIdAsync(int id);
+        Task UpdateAsync(PaymentUser user);
     }
-    
-    [HttpPost("flutterwave")]
-    public IActionResult HandleEvent([FromBody] PaymentEvent evt)
+
+    public class PaymentCustomer
     {
-        if (evt.Status == "successful")
+        public required string Email { get; set; }
+        public required string PhoneNumber { get; set; }
+        public int Id { get; set; }
+    }
+
+    public class PaymentEvent
+    {
+        public required string Status { get; set; }
+        public required string TxRef { get; set; }
+        public int Id { get; set; }
+        public required PaymentCustomer Customer { get; set; }
+    }
+
+    public class PaymentUser
+    {
+        public int Id { get; set; }
+        public required string PhoneNumber { get; set; }
+        public bool IsPremium { get; set; }
+    }
+
+    [ApiController]
+    [Route("api/[controller]")]
+    public class WebhookController : ControllerBase
+    {
+        private readonly IUserRepository _users;
+
+        public WebhookController(IUserRepository users)
         {
-            var user = users.GetById(evt.CustomerId.ToString());
-            if (user != null)
-            {
-                user.IsPremium = true;
-                users.Update(user);
-            }
+            _users = users;
         }
 
-        return Ok();
+        [HttpPost("flutterwave")]
+        public async Task<IActionResult> HandlePayment(
+            [FromBody] PaymentEvent evt,
+            [FromServices] AfricasTalkingService sms)
+        {
+            var user = await _users.GetByIdAsync(evt.Customer.Id);
+            if (user == null)
+                return NotFound();
+
+            if (evt.Status.Equals("successful", StringComparison.OrdinalIgnoreCase))
+            {
+                user.IsPremium = true;
+                await _users.UpdateAsync(user);
+
+                try
+                {
+                    await sms.SendSmsAsync(user.PhoneNumber,
+                        "Payment successful! Premium activated.");
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"SMS error: {ex.Message}");
+                }
+            }
+            else
+            {
+                try
+                {
+                    await sms.SendSmsAsync(user.PhoneNumber,
+                        "Payment failed. Please try again.");
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"SMS error: {ex.Message}");
+                }
+            }
+
+            return Ok();
+        }
     }
 }
