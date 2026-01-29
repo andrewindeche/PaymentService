@@ -16,5 +16,10 @@
     "ClientSecret": "FLWSECK_TEST-xxxxxxxxxxxxxxxxxxxxx", 
     "EncryptionKey": "xxxxxxxxxxxxxxxxxxxxx", 
     "BaseUrl": "https://api.flutterwave.com/v3"
+  },
+  "AfricasTalking": {
+    "Username": "sandbox",
+    "ApiKey": "YOUR_SANDBOX_API_KEY",
+    "BaseUrl": "https://api.sandbox.africastalking.com"
   }
 }
