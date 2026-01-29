@@ -11,16 +11,14 @@ public class FlutterwaveSandboxService
 {
     private readonly HttpClient httpClient;
 
-    public FlutterwaveSandboxService(IConfiguration config)
+    public FlutterwaveSandboxService(HttpClient client, IConfiguration config)
     {
-        httpClient = new HttpClient
-        {
-            BaseAddress = new Uri(config["Flutterwave:BaseUrl"] ?? throw new InvalidOperationException("Flutterwave:BaseUrl configuration is missing"))
-        };
+        httpClient = client;
+        httpClient.BaseAddress = new Uri(config["Flutterwave:BaseUrl"]
+         ?? throw new InvalidOperationException("Flutterwave:BaseUrl configuration is missing"));
         httpClient.DefaultRequestHeaders.Authorization =
-            new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", config["Flutterwave:SecretKey"]);
+         new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", config["Flutterwave:SecretKey"]);
     }
-
     public async Task<string> CreateTestPaymentAsync(string email, decimal amount)
     {
         var payload = new
@@ -37,14 +35,27 @@ public class FlutterwaveSandboxService
         return await response.Content.ReadAsStringAsync();
     }
 
-    public async Task<string> CreateSubscriptionAsync(SubscriptionRequest request) 
-    { 
-        var response = await httpClient.PostAsJsonAsync("/subscriptions", request); 
-        return await response.Content.ReadAsStringAsync(); } 
-       
-        public async Task<string> GetCustomerAsync(string customerId) 
-         { 
-            var response = await httpClient.GetAsync($"/customers/{customerId}"); 
-             return await response.Content.ReadAsStringAsync(); }
+    public async Task<string> CreateSubscriptionAsync(SubscriptionRequest request)
+    {
+        var payload = new 
+        { 
+            tx_ref = request.TxRef, 
+            amount = request.Amount, 
+            currency = request.Currency, 
+            redirect_url = request.RedirectUrl, 
+            customer = new { email = request.CustomerEmail } 
+        }; 
+        
+        var response = await httpClient.PostAsJsonAsync("/subscriptions", payload); 
+        response.EnsureSuccessStatusCode(); 
+        return await response.Content.ReadAsStringAsync();
+    }
+
+    public async Task<string> GetCustomerAsync(string customerId)
+    {
+        var response = await httpClient.GetAsync($"/customers/{customerId}");
+        response.EnsureSuccessStatusCode();
+        return await response.Content.ReadAsStringAsync();
+    }
 }
 
