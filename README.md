@@ -49,10 +49,12 @@ dotnet run
 </ol>
 
 ## <h1> App Workflow
-<li>Login → Get JWT.</li>
-<li>Pay → Call /api/payment/pay/{userId} → Redirect to Flutterwave sandbox checkout.</li>
+<li>Login → curl -X POST http://127.0.0.1:5117/api/auth/login \
+  -H "Content-Type: application/json" \
+  -d '{"username":"admin","password":"password"}'
+→ Get JWT.</li>
+<li>Pay → Call /api/activate-premium/pay/{userId} → Redirect to Flutterwave sandbox checkout.</li>
 <li>Webhook → Flutterwave posts result to /api/webhook/flutterwave.</li>
-<li>Update User → Mark IsPremium = true if successful.</li>
 <li>SMS → Africa’s Talking sandbox sends confirmation text to user’s phone number.</li>
 
 # <h1> Documentation </h1>
