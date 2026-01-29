@@ -12,8 +12,9 @@
     "Audience": "ApiUser"
   },
   "Flutterwave": { 
-    "PublicKey": "FLWPUBK_TEST-xxxxxxxxxxxxxxxxxxxxx", 
-  "SecretKey": "FLWSECK_TEST-xxxxxxxxxxxxxxxxxxxxx", 
-  "BaseUrl": "https://api.flutterwave.com/v3" 
+    "ClientId": "FLWCLIENT_TEST-xxxxxxxxxxxxxxxxxxxxx", 
+    "ClientSecret": "FLWSECK_TEST-xxxxxxxxxxxxxxxxxxxxx", 
+    "EncryptionKey": "xxxxxxxxxxxxxxxxxxxxx", 
+    "BaseUrl": "https://api.flutterwave.com/v3"
   }
 }
