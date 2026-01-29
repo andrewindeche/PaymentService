@@ -31,6 +31,7 @@ builder.Services
     });
 
 builder.Services.AddHttpClient<FlutterwaveSandboxService>();
+builder.Services.AddHttpClient<AfricasTalkingService>();
 builder.Services.AddAuthorization();
 
 var app = builder.Build();
