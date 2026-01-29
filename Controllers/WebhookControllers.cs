@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
 
-namespace YourApp.Controllers
+namespace subpayment.Controllers
 {
     public interface IUserRepository
     {
