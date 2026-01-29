@@ -6,7 +6,7 @@ namespace subpayment.Controllers
 {
     public interface IUserRepository
     {
-        Task<PaymentUser> GetByIdAsync(int id);
+        Task<PaymentUser?> GetByIdAsync(int id);
         Task UpdateAsync(PaymentUser user);
     }
 
@@ -16,7 +16,6 @@ namespace subpayment.Controllers
         public required string PhoneNumber { get; set; }
         public int Id { get; set; }
     }
-
     public class PaymentEvent
     {
         public required string Status { get; set; }
@@ -50,7 +49,7 @@ namespace subpayment.Controllers
         {
             var user = await _users.GetByIdAsync(evt.Customer.Id);
             if (user == null)
-                return NotFound();
+                return NotFound(new { message = "User not found" });
 
             if (evt.Status.Equals("successful", StringComparison.OrdinalIgnoreCase))
             {
@@ -80,7 +79,7 @@ namespace subpayment.Controllers
                 }
             }
 
-            return Ok();
+            return Ok(new { message = "Webhook processed", status = evt.Status });
         }
     }
 }
