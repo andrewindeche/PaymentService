@@ -36,12 +36,10 @@ cd your-repo
 dotnet restore
 ```
 <li>Update configuration</li>
-
-    <ul>
-    <li>use examplesettings.json for reference</li>
-    <li>Open appsettings.json (and/or appsettings.Development.json)</li>
-    <li>Update values such as connection strings, API keys, or environment-specific settings</li>
-    <ul>
+    
+    use examplesettings.json for reference
+    Open appsettings.json (and/or appsettings.Development.json)</li>
+    Update values such as connection strings, API keys, or environment-specific settings
 
 <li>Run the API</li>
 
