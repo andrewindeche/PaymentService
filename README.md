@@ -50,6 +50,13 @@ dotnet run
 ```
 </ol>
 
+## <h1> App Workflow
+<li>Login → Get JWT.</li>
+<li>Pay → Call /api/payment/pay/{userId} → Redirect to Flutterwave sandbox checkout.</li>
+<li>Webhook → Flutterwave posts result to /api/webhook/flutterwave.</li>
+<li>Update User → Mark IsPremium = true if successful.</li>
+<li>SMS → Africa’s Talking sandbox sends confirmation text to user’s phone number.</li>
+
 # <h1> Documentation </h1>
 <p>Read through the flutterwave documentation here: https://developer.flutterwave.com/docs </p>
 <p>Read through Africastalking documentation here: https://developers.africastalking.com/</p>
