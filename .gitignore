@@ -19,6 +19,6 @@ Thumbs.db
 
 # Local config / secrets
 appsettings.Development.json
-appsettings.Local.json
+appsettings.json
 Properties/launchSettings.json
 secrets.json
