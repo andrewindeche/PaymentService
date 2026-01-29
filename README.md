@@ -5,6 +5,7 @@
 | 1.GitHub| Version Control| [Version-Control]; [Repo];|
 | 2.DotNet |  C# Based Backend Framework| [dotnet]; [C#];|
 | 3.Flutterwave | Payment Gateway| [Payment]; [API];|
+| 4.AfricasTalking | SMS Gateway | [SMS]; [Gateway];|
 
 ## <h1> Description</h1>
 <p>Payment is a critical part of any marketplace or Saas. In this hypothetical scenario, a user 
