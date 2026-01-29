@@ -21,6 +21,9 @@ their subscription. The API enables a user to make payments and recieve SMS conf
 
 ## <h1> Setting Up Project
 <ol>
+Create an account on Flutterwave and Africastalking
+Use examplesettings.json to set env/settings variables
+
 <li>Clone the repository </li>
 
 ```bash
