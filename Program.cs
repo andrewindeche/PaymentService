@@ -30,6 +30,7 @@ builder.Services
         };
     });
 
+builder.Services.AddHttpClient<FlutterwaveSandboxService>();
 builder.Services.AddAuthorization();
 
 var app = builder.Build();
