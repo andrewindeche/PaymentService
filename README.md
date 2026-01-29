@@ -19,5 +19,34 @@ their subscription</p>
 <li>An automatic way a user status(is_premium) toggles based off their payment </li>
 </ul>
 
+## <h1> Setting Up P
+<ol>
+<li>Clone the repository </li>
+
+```bash
+git clone git@github.com:andrewindeche/PaymentService.git
+cd your-repo
+```
+<li>Restore dependencies</li>
+
+```bash
+dotnet restore
+```
+<li>Update configuration</li>
+
+    <ul>
+    <li>use examplesettings.json for reference</li>
+    <li>Open appsettings.json (and/or appsettings.Development.json)</li>
+    <li>Update values such as connection strings, API keys, or environment-specific settings</li>
+    <ul>
+
+<li>Run the API</li>
+
+```bash
+dotnet run
+```
+</ol>
+
 # <h1> Documentation </h1>
 <p>Read through the flutterwave documentation here: https://developer.flutterwave.com/docs </p>
+<p>Read through Africastalking documentation here: https://developers.africastalking.com/</p>
