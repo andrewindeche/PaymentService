@@ -10,7 +10,7 @@
 ## <h1> Description</h1>
 <p>Payment is a critical part of any marketplace or Saas. In this hypothetical scenario, a user 
 needs to pay 20USD a month to access premium content. After a month they will have to renew 
-their subscription</p>
+their subscription. The API enables a user to make payments and recieve SMS confirmations</p>
 
 ## <h1> Features</h1>
 <ul>
@@ -19,7 +19,7 @@ their subscription</p>
 <li>An automatic way a user status(is_premium) toggles based off their payment </li>
 </ul>
 
-## <h1> Setting Up P
+## <h1> Setting Up Project
 <ol>
 <li>Clone the repository </li>
 
