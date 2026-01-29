@@ -10,5 +10,10 @@
     "Key": "input32keyhereforencryption!",
     "Issuer": "Api",
     "Audience": "ApiUser"
+  },
+  "Flutterwave": { 
+    "PublicKey": "FLWPUBK_TEST-xxxxxxxxxxxxxxxxxxxxx", 
+  "SecretKey": "FLWSECK_TEST-xxxxxxxxxxxxxxxxxxxxx", 
+  "BaseUrl": "https://api.flutterwave.com/v3" 
   }
 }
