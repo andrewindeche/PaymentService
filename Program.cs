@@ -7,15 +7,18 @@ internal class Program
 {
     private static void Main(string[] args)
     {
-        string connectionString = "Server=localhost;Database=MyDatabase;Trusted_Connection=True;";
+        var builder = WebApplication.CreateBuilder(args);
+        var config = builder.Configuration;
+
+        var connectionString =
+            builder.Configuration.GetSection("mssqlconnection")
+                                .GetValue<string>("ConnectionString");
 
         using (SqlConnection conn = new(connectionString)) 
             { 
                 conn.Open(); 
                 Console.WriteLine("Connected successfully!"); 
             }
-
-        var builder = WebApplication.CreateBuilder(args);
 
         // Add services to the container.
         // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
