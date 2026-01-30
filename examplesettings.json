@@ -23,6 +23,6 @@
     "BaseUrl": "https://api.sandbox.africastalking.com"
   },
     "mssqlconnection": {
-    "ConnectionString": "Server=localhost;Database=Database;User Id=user;Password=password;"
+    "ConnectionString": "Server=localhost;Database=master;User Id=user;Password=password;TrustServerCertificate=True;"
   }
 }
