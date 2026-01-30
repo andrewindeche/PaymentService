@@ -13,12 +13,16 @@ internal class Program
         var connectionString =
             builder.Configuration.GetSection("mssqlconnection")
                                 .GetValue<string>("ConnectionString");
+        
 
-        using (SqlConnection conn = new(connectionString)) 
-            { 
-                conn.Open(); 
-                Console.WriteLine("Connected successfully!"); 
-            }
+using (SqlConnection conn = new(connectionString))
+{
+    conn.Open();
+    Console.WriteLine("Connected successfully!");
+            using SqlCommand cmd = conn.CreateCommand();
+            cmd.CommandText = "IF DB_ID('MyDatabase') IS NULL CREATE DATABASE MyDatabase;";
+            cmd.ExecuteNonQuery();
+        }
 
         // Add services to the container.
         // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
