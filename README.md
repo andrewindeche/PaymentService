@@ -6,7 +6,7 @@
 | 2.DotNet |  C# Based Backend Framework| [dotnet]; [C#];|
 | 3.Flutterwave | Payment Gateway| [Payment]; [API];|
 | 4.AfricasTalking | SMS Gateway | [SMS]; [Gateway];|
-| 4.Microsoft SQL Server | SQL DB | [SQL]; [DB]; |
+| 5.Microsoft SQL Server | SQL DB | [SQL]; [DB]; |
 
 ## <h1> Description</h1>
 <p>Payment is a critical part of any marketplace or Saas. In this hypothetical scenario, a user 
@@ -38,15 +38,26 @@ dotnet restore
 ```
 <li>Update configuration</li>
     
-    use examplesettings.json for reference
-    Open appsettings.json (and/or appsettings.Development.json)</li>
-    Update values such as connection strings, API keys, or environment-specific settings
+  use examplesettings.json for reference
+  Open appsettings.json (and/or appsettings.Development.json)</li>
+  Update values such as connection strings, API keys, or environment-specific settings
+<li>Run Docker Instance of MsSql</li>
+  Start the Docker server;
+
+  ```bash
+  docker run -d \
+  --name sqlserver \
+  -e 'ACCEPT_EULA=Y' \
+  -e 'SA_PASSWORD=password' \
+  -p 1433:1433 \
+  mcr.microsoft.com/mssql/server:2022-latest
+  ```
 
 <li>Run the API</li>
 
-```bash
-dotnet run
-```
+  ```bash
+  dotnet run
+  ```
 </ol>
 
 ## <h1> App Workflow
