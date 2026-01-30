@@ -21,5 +21,8 @@
     "Username": "sandbox",
     "ApiKey": "YOUR_SANDBOX_API_KEY",
     "BaseUrl": "https://api.sandbox.africastalking.com"
+  },
+    "mssqlconnection": {
+    "ConnectionString": "Server=localhost;Database=Database;User Id=user;Password=password;"
   }
 }
