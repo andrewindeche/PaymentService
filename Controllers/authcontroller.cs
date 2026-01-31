@@ -27,7 +27,9 @@ public class AuthController : ControllerBase
                 new Claim(ClaimTypes.Role, "Admin")
             };
 
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"] ?? throw new InvalidOperationException("Jwt:Key not configured")));
+            var keyString = _config["Jwt:Key"]!.Trim();
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(keyString));
+
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
             var token = new JwtSecurityToken(

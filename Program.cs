@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.Data.SqlClient;
+using Microsoft.IdentityModel.Logging;
 
 internal class Program
 {
@@ -9,7 +10,7 @@ internal class Program
     {
         var builder = WebApplication.CreateBuilder(args);
         var config = builder.Configuration;
-
+    
         var connectionString =
             builder.Configuration.GetSection("mssqlconnection")
                                 .GetValue<string>("ConnectionString");
@@ -24,15 +25,16 @@ using (SqlConnection conn = new(connectionString))
             cmd.ExecuteNonQuery();
         }
 
-        // Add services to the container.
-        // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
         builder.Services.AddControllers();
         builder.Services.AddOpenApi();
 
         builder.Services
             .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             .AddJwtBearer(options =>
-            {
+            {   
+                var keyString = builder.Configuration["Jwt:Key"]!.Trim(); 
+                var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(keyString));
+
                 options.RequireHttpsMetadata = false;
                 options.SaveToken = true;
                 options.TokenValidationParameters = new TokenValidationParameters
@@ -41,18 +43,28 @@ using (SqlConnection conn = new(connectionString))
                     ValidateAudience = true,
                     ValidateLifetime = true,
                     ValidateIssuerSigningKey = true,
-                    ValidIssuer = builder.Configuration["Jwt:Issuer"],
-                    ValidAudience = builder.Configuration["Jwt:Audience"],
-                    IssuerSigningKey = new SymmetricSecurityKey(
-                        Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]!)
-                    ),
+                    ValidIssuer = builder.Configuration["Jwt:Issuer"]?.Trim(),
+                    ValidAudience = builder.Configuration["Jwt:Audience"]?.Trim(),
+                    IssuerSigningKey = key,
                     ClockSkew = TimeSpan.Zero
+                };
+                options.Events = new JwtBearerEvents
+                {
+                    OnAuthenticationFailed = ctx =>
+                    {
+                        Console.WriteLine("Auth failed."); 
+                        Console.WriteLine("Exception: " + ctx.Exception); 
+                        return Task.CompletedTask;
+                    }
                 };
             });
 
         builder.Services.AddHttpClient<FlutterwaveSandboxService>();
         builder.Services.AddHttpClient<AfricasTalkingService>();
         builder.Services.AddAuthorization();
+        builder.Logging.ClearProviders();
+        builder.Logging.AddConsole();
+        IdentityModelEventSource.ShowPII = true;
 
         var app = builder.Build();
 
@@ -61,7 +73,7 @@ using (SqlConnection conn = new(connectionString))
             app.MapOpenApi();
         }
 
-        app.UseHttpsRedirection();
+        //app.UseHttpsRedirection();
         app.UseAuthentication();
         app.UseAuthorization();
 
