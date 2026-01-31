@@ -65,6 +65,13 @@ dotnet restore
   -H "Content-Type: application/json" \
   -d '{"username":"admin","password":"password"}'
 → Get JWT.</li>
+<li>Sanity check → TOKEN=$(curl -s -X POST http://127.0.0.1:5117/api/auth/login \
+  -H "Content-Type: application/json" \
+  -d '{"username":"admin","password":"password"}' | jq -r .token)
+
+  curl -i http://127.0.0.1:5117/secure \
+    -H "Authorization: Bearer $TOKEN"</li>
+
 <li>Pay → Call /api/activate-premium/pay/{userId} → Redirect to Flutterwave sandbox checkout.</li>
 <li>Webhook → Flutterwave posts result to /api/webhook/flutterwave.</li>
 <li>SMS → Africa’s Talking sandbox sends confirmation text to user’s phone number.</li>
