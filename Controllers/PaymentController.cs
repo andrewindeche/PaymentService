@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 
 public class User
 {
@@ -14,6 +15,7 @@ public interface IUserRepository
 
 [ApiController]
 [Route("api/[controller]")]
+[Authorize]
 public class PaymentController : ControllerBase
 {
     private readonly IUserRepository _users;
