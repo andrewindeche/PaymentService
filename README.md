@@ -52,6 +52,12 @@ dotnet restore
   -p 1433:1433 \
   mcr.microsoft.com/mssql/server:2022-latest
   ```
+<li>Migrate Db</li>
+
+```bash
+dotnet ef migrations add InitUserDb
+dotnet ef database update
+```
 
 <li>Run the API</li>
 
