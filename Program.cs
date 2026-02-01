@@ -13,10 +13,8 @@ internal class Program
         var config = builder.Configuration;
     
         var connectionString =
-            builder.Configuration.GetSection("mssqlconnection")
-                                .GetValue<string>("ConnectionString");
+            builder.Configuration["mssqlconnection:ConnectionString"];
         
-
 using (SqlConnection conn = new(connectionString))
 {
     conn.Open();
@@ -26,7 +24,7 @@ using (SqlConnection conn = new(connectionString))
             cmd.ExecuteNonQuery();
         }
         builder.Services.AddDbContext<UserDbContext>(options =>
-            options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+            options.UseSqlServer(connectionString));
         builder.Services.AddScoped<IUserRepository, SqlUserRepository>();
         builder.Services.AddControllers();
         builder.Services.AddOpenApi();
