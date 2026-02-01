@@ -3,6 +3,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.Data.SqlClient;
 using Microsoft.IdentityModel.Logging;
+using Microsoft.EntityFrameworkCore;
 
 internal class Program
 {
@@ -24,7 +25,9 @@ using (SqlConnection conn = new(connectionString))
             cmd.CommandText = "IF DB_ID('MyDatabase') IS NULL CREATE DATABASE MyDatabase;";
             cmd.ExecuteNonQuery();
         }
-
+        builder.Services.AddDbContext<UserDbContext>(options =>
+            options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+        builder.Services.AddScoped<IUserRepository, SqlUserRepository>();
         builder.Services.AddControllers();
         builder.Services.AddOpenApi();
 
