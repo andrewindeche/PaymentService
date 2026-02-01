@@ -15,7 +15,7 @@ public interface IUserRepository
 
 [ApiController]
 [Route("api/[controller]")]
-[Authorize]
+[Authorize(Roles = "Admin")]
 public class PaymentController : ControllerBase
 {
     private readonly IUserRepository _users;
