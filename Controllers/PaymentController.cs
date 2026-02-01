@@ -11,6 +11,7 @@ public interface IUserRepository
 {
     User GetById(string userId);
     void Update(User user);
+    void Add(User user);
 }
 
 [ApiController]
