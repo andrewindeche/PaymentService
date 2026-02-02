@@ -12,7 +12,7 @@ public class User
 
 [ApiController]
 [Route("api/[controller]")]
-[Authorize(Roles = "Admin")]
+[Authorize(Roles = "Admin,PremiumUser")]
 public class PaymentController : ControllerBase
 {
     private readonly IUserRepository _users;
@@ -23,9 +23,9 @@ public class PaymentController : ControllerBase
     }
 
     [HttpPost("activate-premium/{userId}")]
-    public IActionResult ActivatePremium(string userId)
+    public IActionResult ActivatePremium(int userId)
     {
-        var user = _users.GetById(int.Parse(userId));
+        var user = _users.GetById(userId);
         if (user == null) return NotFound();
 
         user.IsPremium = true;
