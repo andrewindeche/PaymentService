@@ -4,6 +4,8 @@ using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using SubPayment.Models;
+using SubPayment.Data;
 
 [ApiController]
 [Route("api/[controller]")]
@@ -22,16 +24,19 @@ public class AuthController : ControllerBase
     {
         if (login.Username == "admin" && login.Password == "password")
         {   
-            var user = _users.GetById(login.Username); 
+            var user = _users.GetByUsername(login.Username); 
             if (user == null) 
             {
-                user = new User { Id = login.Username, IsPremium = false }; 
-                _users.Add(user); 
+                return Unauthorized("User not found");
+            }
+            if (user.PasswordHash != login.Password) 
+            { 
+                return Unauthorized("Invalid password"); 
             }
             var claims = new[]
             {
                 new Claim(ClaimTypes.Name, login.Username),
-                new Claim(ClaimTypes.Role, "Admin")
+                new Claim(ClaimTypes.Role, user.IsPremium ? "PremiumUser" : "User")
             };
 
             var keyString = _config["Jwt:Key"]!.Trim();
@@ -63,8 +68,3 @@ public class ValuesController : ControllerBase
     }
 }
 
-public class LoginModel
-{
-    public required string Username { get; set; }
-    public required string Password { get; set; }
-}
