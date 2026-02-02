@@ -36,7 +36,7 @@ public class AuthController : ControllerBase
             var claims = new[]
             {
                 new Claim(ClaimTypes.Name, login.Username),
-                new Claim(ClaimTypes.Role, user.IsPremium ? "PremiumUser" : "User")
+                new Claim(ClaimTypes.Role, user.Username == "admin" ? "Admin" : (user.IsPremium ? "PremiumUser" : "User"))
             };
 
             var keyString = _config["Jwt:Key"]!.Trim();
