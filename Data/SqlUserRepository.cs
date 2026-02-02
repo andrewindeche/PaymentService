@@ -30,7 +30,8 @@ namespace SubPayment.Data
 
         public void Update(User user)
         {
-            throw new NotImplementedException();
+            _context.Users.Update(user); 
+            _context.SaveChanges();
         }
     }
 }
