@@ -1,8 +1,6 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
-using Microsoft.Data.SqlClient;
-using Microsoft.IdentityModel.Logging;
 using Microsoft.EntityFrameworkCore;
 using SubPayment.Data;
 
@@ -15,15 +13,6 @@ internal class Program
     
         var connectionString =
             builder.Configuration["mssqlconnection:ConnectionString"];
-        
-using (SqlConnection conn = new(connectionString))
-{
-    conn.Open();
-    Console.WriteLine("Connected successfully!");
-            using SqlCommand cmd = conn.CreateCommand();
-            cmd.CommandText = "IF DB_ID('MyDatabase') IS NULL CREATE DATABASE MyDatabase;";
-            cmd.ExecuteNonQuery();
-        }
         builder.Services.AddDbContext<UserDbContext>(options =>
             options.UseSqlServer(connectionString));
         builder.Services.AddScoped<IUserRepository, SqlUserRepository>();
@@ -50,29 +39,24 @@ using (SqlConnection conn = new(connectionString))
                     IssuerSigningKey = key,
                     ClockSkew = TimeSpan.Zero
                 };
-                options.Events = new JwtBearerEvents
-                {
-                    OnAuthenticationFailed = ctx =>
-                    {
-                        Console.WriteLine("Auth failed."); 
-                        Console.WriteLine("Exception: " + ctx.Exception); 
-                        return Task.CompletedTask;
-                    }
-                };
             });
 
         builder.Services.AddHttpClient<FlutterwaveSandboxService>();
-        builder.Services.AddHttpClient<AfricasTalkingService>();
+        builder.Services.AddSingleton<AfricasTalkingService>();
         builder.Services.AddAuthorization();
         builder.Logging.ClearProviders();
         builder.Logging.AddConsole();
-        IdentityModelEventSource.ShowPII = true;
 
         var app = builder.Build();
 
         if (app.Environment.IsDevelopment())
         {
             app.MapOpenApi();
+        }
+        using (var scope = app.Services.CreateScope()) 
+        { 
+            var db = scope.ServiceProvider.GetRequiredService<UserDbContext>(); 
+            db.Database.Migrate(); 
         }
 
         //app.UseHttpsRedirection();
