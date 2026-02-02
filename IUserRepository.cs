@@ -1,9 +1,12 @@
-using SubPayment.Models;
 
-public interface IUserRepository
+namespace SubPayment.Data
 {
-    User? GetById(int id);               
-    User? GetByUsername(string username);
-    void Add(User user);
-    void Update(User user);
+    public interface IUserRepository
+    {
+        Task<User?> GetByIdAsync(int id); 
+        Task<User?> GetByUsernameAsync(string username); 
+        Task AddAsync(User user); 
+        Task UpdateAsync(User user);
+    }
 }
+

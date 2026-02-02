@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
+using SubPayment.Data;
 
 public class User
 {
@@ -23,21 +24,21 @@ public class PaymentController : ControllerBase
     }
 
     [HttpPost("activate-premium/{userId}")]
-    public IActionResult ActivatePremium(int userId)
+    public async Task<IActionResult> ActivatePremium(int userId)
     {
-        var user = _users.GetById(userId);
+        var user = await _users.GetByIdAsync(userId);
         if (user == null) return NotFound();
 
         user.IsPremium = true;
-        _users.Update(user);
+        await _users.UpdateAsync(user);
 
         return Ok(new { message = "User upgraded to premium", user });
     }
 
     [HttpGet("user/{userId}")]
-    public IActionResult GetUserDetails(int userId)
+    public async Task<IActionResult> GetUserDetails(int userId)
     {
-        var user = _users.GetById(userId);
+        var user = await _users.GetByIdAsync(userId);
         if (user == null) return NotFound();
 
         return Ok(user);

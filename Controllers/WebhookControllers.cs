@@ -1,8 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Threading.Tasks;
 
-namespace subpayment.Controllers
+namespace SubPayment.Controllers
 {
     public interface IUserRepository
     {

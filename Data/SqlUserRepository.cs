@@ -1,4 +1,3 @@
-using SubPayment.Models; 
 using Microsoft.EntityFrameworkCore;
 
 namespace SubPayment.Data
@@ -12,26 +11,22 @@ namespace SubPayment.Data
             _context = context;
         }
 
-        public User? GetById(int id)
-        {
-            return _context.Users.Find(id);
-        }
+        public async Task<User?> GetByIdAsync(int id) =>
+            await _context.Users.FindAsync(id);
 
-        public User? GetByUsername(string username) 
-        { 
-            return _context.Users.SingleOrDefault(u => u.Username == username); 
-        }
+        public async Task<User?> GetByUsernameAsync(string username) =>
+            await _context.Users.SingleOrDefaultAsync(u => u.Username == username);
 
-        public void Add(User user)
+        public async Task AddAsync(User user)
         {
             _context.Users.Add(user);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
 
-        public void Update(User user)
+        public async Task UpdateAsync(User user)
         {
-            _context.Users.Update(user); 
-            _context.SaveChanges();
+            _context.Users.Update(user);
+            await _context.SaveChangesAsync();
         }
     }
 }
