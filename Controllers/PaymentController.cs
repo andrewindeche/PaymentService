@@ -9,13 +9,6 @@ public class User
     public bool IsPremium { get; set; }
 }
 
-public interface IUserRepository
-{
-    User? GetById(int id);
-    void Update(User user);
-    void Add(User user);
-    User? GetByUsername(string username);
-}
 
 [ApiController]
 [Route("api/[controller]")]
