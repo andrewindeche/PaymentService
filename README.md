@@ -78,7 +78,7 @@ dotnet ef database update
   curl -i http://127.0.0.1:5117/secure \
     -H "Authorization: Bearer $TOKEN"</li>
 
-<li>Pay → Call curl -i -X POST http://127.0.0.1:5117/api/payment/activate-premium/admin \
+<li>Pay → Call curl -i -X POST http://127.0.0.1:5117/api/payment/activate-premium/1 \
   -H "Authorization: Bearer $TOKEN" \
   -H "Content-Type: application/json"
  → Redirect to Flutterwave sandbox checkout.</li>
