@@ -7,7 +7,7 @@
 | 3.Flutterwave | Payment Gateway| [Payment]; [API];|
 | 4.AfricasTalking | SMS Gateway | [SMS]; [Gateway];|
 | 5.Microsoft SQL Server | SQL DB | [SQL]; [DB]; |
-| 6. Ngrok | API Gateway | [Tunnel]; [API]; |
+| 6.Ngrok | API Gateway | [Tunnel]; [API]; |
 
 ## <h1> Description</h1>
 <p>Payment is a critical part of any marketplace or Saas. In this hypothetical scenario, a user 
@@ -19,6 +19,8 @@ their subscription. The API enables a user to make payments and recieve SMS conf
 <li>An endpoint for user to activate premium </li>
 <li>An endpoint to view user details including payment status </li>
 <li>An automatic way a user status(is_premium) toggles based off their payment </li>
+<li>Webhook to send callback after premium is activated so that Flutterwave sends SMS</li>
+<li>Ngrok API Gateway to tunnel URL for Flutterwave</li>
 </ul>
 
 ## <h1> Setting Up Project
@@ -75,10 +77,13 @@ curl -X POST http://127.0.0.1:5117/api/auth/login \
   -H "Content-Type: application/json" \
   -d '{"username":"admin","password":"password"}'
 ```
+</li>
+
+<li>
+Sanity check →
 
 ```bash
-→ Get JWT.</li>
-<li>Sanity check → TOKEN=$(curl -s -X POST http://127.0.0.1:5117/api/auth/login \
+TOKEN=$(curl -s -X POST http://127.0.0.1:5117/api/auth/login \
   -H "Content-Type: application/json" \
   -d '{"username":"admin","password":"password"}' | jq -r .token)
 
@@ -87,7 +92,7 @@ curl -i http://127.0.0.1:5117/secure \
 ```
 </li>
 
-<li> Activate user to premium → Call 
+<li> Activate user to premium → 
 
 ```bash
 curl -i -X POST http://127.0.0.1:5117/api/payment/activate-premium/1 \
@@ -95,6 +100,7 @@ curl -i -X POST http://127.0.0.1:5117/api/payment/activate-premium/1 \
   -H "Content-Type: application/json"
 ```
  </li>
+
 <li>Webhook → Flutterwave posts result to /api/webhook/flutterwave ->
 
 ```bash
