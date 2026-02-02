@@ -7,6 +7,7 @@
 | 3.Flutterwave | Payment Gateway| [Payment]; [API];|
 | 4.AfricasTalking | SMS Gateway | [SMS]; [Gateway];|
 | 5.Microsoft SQL Server | SQL DB | [SQL]; [DB]; |
+| 6. Ngrok | API Gateway | [Tunnel]; [API]; |
 
 ## <h1> Description</h1>
 <p>Payment is a critical part of any marketplace or Saas. In this hypothetical scenario, a user 
