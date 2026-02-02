@@ -3,6 +3,10 @@ using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
 using SubPayment.Models;
 using SubPayment.Data;
+using System.IdentityModel.Tokens.Jwt;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+
 
 [ApiController]
 [Route("api/[controller]")]
@@ -16,7 +20,7 @@ public class AuthController : ControllerBase
         _users = users;
     }
 
-    [HttpPost("login")]
+[HttpPost("login")]
 public async Task<IActionResult> Login([FromBody] LoginModel login)
 {
     if (login.Username == "admin" && login.Password == "password")
@@ -43,13 +47,27 @@ public async Task<IActionResult> Login([FromBody] LoginModel login)
             )
         };
 
-        return Ok(new { message = "Login successful" /*, token */ });
+        var key = new SymmetricSecurityKey(
+            Encoding.UTF8.GetBytes(_config["Jwt:Key"]!)
+        );
+        var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+
+        var token = new JwtSecurityToken(
+            issuer: _config["Jwt:Issuer"],
+            audience: _config["Jwt:Audience"],
+            claims: claims,
+            expires: DateTime.UtcNow.AddHours(1),
+            signingCredentials: creds
+        );
+
+        var tokenString = new JwtSecurityTokenHandler().WriteToken(token);
+
+        return Ok(new { message = "Login successful", token = tokenString });
     }
 
     return Unauthorized("Invalid credentials");
-    }
-
 }
+
 
 [ApiController]
 [Route("api/[controller]")]
@@ -62,4 +80,4 @@ public class ValuesController : ControllerBase
         return Ok(new[] { "Value1", "Value2" });
     }
 }
-
+}
