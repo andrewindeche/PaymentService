@@ -83,7 +83,19 @@ dotnet ef database update
   -H "Authorization: Bearer $TOKEN" \
   -H "Content-Type: application/json"
  </li>
-<li>Webhook → Flutterwave posts result to /api/webhook/flutterwave.</li>
+<li>Webhook → Flutterwave posts result to /api/webhook/flutterwave -> curl -X POST https://abcd1234.ngrok.io/api/webhook/flutterwave \
+  -H "Content-Type: application/json" \
+  -d '{
+    "status":"successful",
+    "txRef":"TX123",
+    "id":1,
+    "customer":{
+      "id":1,
+      "email":"admin@example.com",
+      "phoneNumber":"+254700000000"
+    }
+  }'
+ </li>
 <li>SMS → Africa’s Talking sandbox sends confirmation text to user’s phone number.</li>
 
 # <h1> Documentation </h1>
