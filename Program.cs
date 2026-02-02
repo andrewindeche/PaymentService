@@ -4,6 +4,7 @@ using System.Text;
 using Microsoft.Data.SqlClient;
 using Microsoft.IdentityModel.Logging;
 using Microsoft.EntityFrameworkCore;
+using SubPayment.Data;
 
 internal class Program
 {
