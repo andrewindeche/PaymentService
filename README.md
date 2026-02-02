@@ -76,8 +76,9 @@ dotnet ef database update
   -H "Content-Type: application/json" \
   -d '{"username":"admin","password":"password"}' | jq -r .token)
 
-  curl -i http://127.0.0.1:5117/secure \
-    -H "Authorization: Bearer $TOKEN"</li>
+curl -i http://127.0.0.1:5117/secure \
+  -H "Authorization: Bearer $TOKEN"
+</li>
 
 <li> Activate user to premium → Call curl -i -X POST http://127.0.0.1:5117/api/payment/activate-premium/1 \
   -H "Authorization: Bearer $TOKEN" \
