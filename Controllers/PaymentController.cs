@@ -3,15 +3,18 @@ using Microsoft.AspNetCore.Authorization;
 
 public class User
 {
-    public required string Id { get; set; }
+    public required int Id { get; set; }
+    public string Username { get; set; } = string.Empty; 
+    public string PasswordHash { get; set; } = string.Empty;
     public bool IsPremium { get; set; }
 }
 
 public interface IUserRepository
 {
-    User GetById(string userId);
+    User? GetById(int id);
     void Update(User user);
     void Add(User user);
+    User? GetByUsername(string username);
 }
 
 [ApiController]
@@ -29,7 +32,7 @@ public class PaymentController : ControllerBase
     [HttpPost("activate-premium/{userId}")]
     public IActionResult ActivatePremium(string userId)
     {
-        var user = _users.GetById(userId);
+        var user = _users.GetById(int.Parse(userId));
         if (user == null) return NotFound();
 
         user.IsPremium = true;
@@ -39,7 +42,7 @@ public class PaymentController : ControllerBase
     }
 
     [HttpGet("user/{userId}")]
-    public IActionResult GetUserDetails(string userId)
+    public IActionResult GetUserDetails(int userId)
     {
         var user = _users.GetById(userId);
         if (user == null) return NotFound();
