@@ -68,9 +68,15 @@ dotnet ef database update
 </ol>
 
 ## <h1> App Workflow
-<li>Login → curl -X POST http://127.0.0.1:5117/api/auth/login \
+<li>Login → 
+
+```bash
+curl -X POST http://127.0.0.1:5117/api/auth/login \
   -H "Content-Type: application/json" \
   -d '{"username":"admin","password":"password"}'
+```
+
+```bash
 → Get JWT.</li>
 <li>Sanity check → TOKEN=$(curl -s -X POST http://127.0.0.1:5117/api/auth/login \
   -H "Content-Type: application/json" \
@@ -78,13 +84,21 @@ dotnet ef database update
 
 curl -i http://127.0.0.1:5117/secure \
   -H "Authorization: Bearer $TOKEN"
+```
 </li>
 
-<li> Activate user to premium → Call curl -i -X POST http://127.0.0.1:5117/api/payment/activate-premium/1 \
+<li> Activate user to premium → Call 
+
+```bash
+curl -i -X POST http://127.0.0.1:5117/api/payment/activate-premium/1 \
   -H "Authorization: Bearer $TOKEN" \
   -H "Content-Type: application/json"
+```
  </li>
-<li>Webhook → Flutterwave posts result to /api/webhook/flutterwave -> curl -X POST https://abcd1234.ngrok.io/api/webhook/flutterwave \
+<li>Webhook → Flutterwave posts result to /api/webhook/flutterwave ->
+
+```bash
+ curl -X POST https://abcd1234.ngrok.io/api/webhook/flutterwave \
   -H "Content-Type: application/json" \
   -d '{
     "status":"successful",
@@ -96,6 +110,7 @@ curl -i http://127.0.0.1:5117/secure \
       "phoneNumber":"+254700000000"
     }
   }'
+```
  </li>
 <li>SMS → Africa’s Talking sandbox sends confirmation text to user’s phone number.</li>
 
