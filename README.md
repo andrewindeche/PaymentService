@@ -81,7 +81,7 @@ dotnet ef database update
 <li>Pay → Call curl -i -X POST http://127.0.0.1:5117/api/payment/activate-premium/1 \
   -H "Authorization: Bearer $TOKEN" \
   -H "Content-Type: application/json"
- → Redirect to Flutterwave sandbox checkout.</li>
+ → Activate user to premium</li>
 <li>Webhook → Flutterwave posts result to /api/webhook/flutterwave.</li>
 <li>SMS → Africa’s Talking sandbox sends confirmation text to user’s phone number.</li>
 
