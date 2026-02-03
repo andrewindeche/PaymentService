@@ -1,3 +1,4 @@
+using SubPayment.Models;
 
 namespace SubPayment.Data
 {

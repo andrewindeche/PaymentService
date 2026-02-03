@@ -1,14 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using SubPayment.Data;
-
-public class User
-{
-    public required int Id { get; set; }
-    public string Username { get; set; } = string.Empty; 
-    public string PasswordHash { get; set; } = string.Empty;
-    public bool IsPremium { get; set; }
-}
+using SubPayment.Models;
 
 
 [ApiController]

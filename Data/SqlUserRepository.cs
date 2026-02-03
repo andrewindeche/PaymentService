@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using SubPayment.Models;
 
 namespace SubPayment.Data
 {
