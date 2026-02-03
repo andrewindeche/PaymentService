@@ -17,8 +17,7 @@ their subscription. The API enables a user to activate_premium after login and r
 ## <h1> Features</h1>
 <ul>
 <li>An endpoint for user to activate premium </li>
-<li>An endpoint to view user details including payment status </li>
-<li>An automatic way a user status(is_premium) toggles based off their payment </li>
+<li>An automatic way a user status(is_premium) toggles based off their subscription </li>
 <li>Webhook to send callback after premium is activated so that Flutterwave sends SMS</li>
 <li>Ngrok API Gateway to tunnel URL to Flutterwave</li>
 </ul>
