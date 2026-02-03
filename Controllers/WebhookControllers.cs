@@ -1,13 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
+using SubPayment.Data;
+
 
 namespace SubPayment.Controllers
 {
-    public interface IUserRepository
-    {
-        Task<PaymentUser?> GetByIdAsync(int id);
-        Task UpdateAsync(PaymentUser user);
-    }
-
     public class PaymentCustomer
     {
         public required string Email { get; set; }
@@ -56,7 +52,7 @@ namespace SubPayment.Controllers
 
                 try
                 {
-                    await sms.SendSmsAsync(user.PhoneNumber,
+                    await sms.SendSmsAsync(evt.Customer.PhoneNumber,
                         "Payment successful! Premium activated.");
                 }
                 catch (Exception ex)
@@ -68,7 +64,7 @@ namespace SubPayment.Controllers
             {
                 try
                 {
-                    await sms.SendSmsAsync(user.PhoneNumber,
+                    await sms.SendSmsAsync(evt.Customer.PhoneNumber,
                         "Payment failed. Please try again.");
                 }
                 catch (Exception ex)
