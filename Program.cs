@@ -6,7 +6,7 @@ using SubPayment.Data;
 
 internal class Program
 {
-    private static void Main(string[] args)
+    private static async Task Main(string[] args)
     {
         var builder = WebApplication.CreateBuilder(args);
         var config = builder.Configuration;
@@ -56,7 +56,8 @@ internal class Program
         using (var scope = app.Services.CreateScope()) 
         { 
             var db = scope.ServiceProvider.GetRequiredService<UserDbContext>(); 
-            db.Database.Migrate(); 
+            db.Database.Migrate();
+            await DbSeeder.SeedAdminAsync(scope.ServiceProvider);
         }
 
         //app.UseHttpsRedirection();
