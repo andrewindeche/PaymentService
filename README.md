@@ -104,6 +104,7 @@ curl -i -X POST http://127.0.0.1:5117/api/payment/activate-premium/1 \
 
 ```bash
  curl -X POST https://abcd1234.ngrok.io/api/webhook/flutterwave \
+  -H "Authorization: Bearer $TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
     "status":"successful",
@@ -117,7 +118,7 @@ curl -i -X POST http://127.0.0.1:5117/api/payment/activate-premium/1 \
   }'
 ```
  </li>
-<li>SMS → Africa’s Talking sandbox sends confirmation text to user’s phone number.</li>
+<li>SMS → Set up on Africa’s Talking sandbox, Get confirmation text on set user’s phone number.</li>
 
 # <h1> Documentation </h1>
 <p>Read through the flutterwave documentation here: https://developer.flutterwave.com/docs </p>
