@@ -27,6 +27,7 @@ namespace SubPayment.Controllers
 
     [ApiController]
     [Route("api/[controller]")]
+    [Authorize(Roles = "Admin,PremiumUser")]
     public class WebhookController : ControllerBase
     {
         private readonly IUserRepository _users;
